@@ -1,13 +1,14 @@
 #!/opt/bin/sh
-echo "Установка зависимостей..."
 # Install wireguard tools
 if ! opkg list-installed | grep '^wireguard-tools' > /dev/null; then
+      echo "Установка wireguard-tools..."
       opkg update
       opkg install wireguard-tools
 fi
 priv="${1:-$(wg genkey)}"
 pub="${2:-$(echo "${priv}" | wg pubkey)}"
 api="https://api.cloudflareclient.com/v0i1909051800"
+echo "Генерация AmneziaWG конфигурации для WARP..."
 ins() { curl -s -H 'user-agent:' -H 'content-type: application/json' -X "$1" "${api}/$2" "${@:3}"; }
 sec() { ins "$1" "$2" -H "authorization: Bearer $3" "${@:4}"; }
 response=$(ins POST "reg" -d "{\"install_id\":\"\",\"tos\":\"$(date -u +%FT%T.000Z)\",\"key\":\"${pub}\",\"fcm_token\":\"\",\"type\":\"ios\",\"locale\":\"en_US\"}")
