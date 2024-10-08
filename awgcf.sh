@@ -1,4 +1,5 @@
 #!/opt/bin/sh
+clear
 # Install wireguard tools
 if ! opkg list-installed | grep '^wireguard-tools' > /dev/null; then
       echo "Установка wireguard-tools..."
@@ -45,9 +46,7 @@ Endpoint = ${peer_endpoint}:${port}
 EOM
 )
 
-echo -e "\n\n\n"
-[ -t 1 ] && echo "########## НАЧАЛО КОНФИГА ##########"
+echo "########## НАЧАЛО КОНФИГА ##########"
 echo "${conf}"
-[ -t 1 ] && echo "########### КОНЕЦ КОНФИГА ###########"
+echo "########### КОНЕЦ КОНФИГА ###########"
 
-#conf_base64=$(echo -n "${conf}" | base64 -w 0)
