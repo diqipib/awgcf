@@ -1,11 +1,8 @@
 #!/opt/bin/sh
 clear
-# Install wireguard tools
-if ! opkg list-installed | grep '^wireguard-tools' > /dev/null; then
-      echo "Установка wireguard-tools..."
-      opkg update
-      opkg install wireguard-tools
-fi
+echo "Установка необходимых утилит..."
+opkg update
+opkg install wireguard-tools jq
 priv="${1:-$(wg genkey)}"
 pub="${2:-$(echo "${priv}" | wg pubkey)}"
 api="https://api.cloudflareclient.com/v0i1909051800"
